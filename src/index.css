@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
+.quote-text {
+	border: 2px solid black;
+	font-family: "Roboto Mono", monospace;
+	font-size: 2rem;
+	padding: 2rem;
+	border-radius: 1rem;
+}
+
+.timer {
+	font-family: "Roboto Mono", monospace;
+	font-size: 3rem;
+	position: fixed;
+	top: 0;
+	left: 25px;
+}
+
+.enter-prompt {
+	font-family: "Roboto Mono", monospace;
+	font-size: 1.25rem;
+	margin: 25px;
+}
+
+.main-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.author {
+	font-size: 1.5rem;
+	padding-top: 1rem;
+}
+
+.title {
+	font-family: "Roboto Mono", monospace;
+	font-size: 3rem;
+	display: flex;
+	justify-content: center;
+}
+
+#text-input {
+	border: none;
+	background-color: transparent;
+	resize: none;
+	outline: none;
+	cursor: none;
+	font-display: none;
+	color: transparent;
+	position: absolute;
+	top: -1000px;
+	left: -1000px;
+}
+
+.start-button {
+	border-color: transparent;
+	font-family: "Roboto Mono", monospace;
+	padding: 20px 100px;
+	font-size: 3rem;
+	cursor: pointer;
+	border-radius: 2rem;
+	transition: 0.5s;
+	color: white;
+	background-color: #0054e6;
+}
+
+.start-button:hover {
+	background-color: #0075fa;
+	color: white;
+}
+
+.setup-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.time-select {
+	margin: 25px;
+	font-family: "Roboto Mono", monospace;
+}
+
+.radio-container {
+	display: block;
+	width: 250px;
+	padding: 10px;
+	font-family: "Roboto Mono", monospace;
+}
+
+.dash-container {
+	font-family: "Roboto Mono", monospace;
+	font-size: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.hide {
+	display: none;
+}
+
+.show {
+	display: block;
+}
