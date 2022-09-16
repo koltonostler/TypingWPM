@@ -11,9 +11,6 @@
 .timer {
 	font-family: "Roboto Mono", monospace;
 	font-size: 3rem;
-	position: fixed;
-	top: 0;
-	left: 25px;
 }
 
 .enter-prompt {
