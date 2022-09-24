@@ -4,7 +4,7 @@ import Setup from "./components/Setup";
 
 function App() {
 	//####   Setup Quote API    #####
-	const quoteAPI = "https://goquotes-api.herokuapp.com/api/v1/random?count=1";
+	const quoteAPI = "https://api.quotable.io/random?minLength=75";
 	const [error, setError] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [quote, setQuote] = useState([]);
@@ -14,8 +14,8 @@ function App() {
 			.then((res) => res.json())
 			.then(
 				(data) => {
-					data.author = data.quotes[0].author;
-					data.content = data.quotes[0].text;
+					// data.author = data.author;
+					// data.content = data.content;
 					setQuote(data);
 					setIsLoaded(true);
 				},
