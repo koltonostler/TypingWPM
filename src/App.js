@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Setup from "./components/Setup";
-// import TypingInput from "./components/TypingInput";
 
 function App() {
 	//####   Setup Quote API    #####
@@ -9,6 +8,7 @@ function App() {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [quote, setQuote] = useState([]);
 
+	// loads and parses quote from API into json format
 	const loadQuote = () => {
 		fetch(quoteAPI)
 			.then((res) => res.json())

@@ -3,23 +3,30 @@ import { useState, useRef } from "react";
 import TypingInput from "./TypingInput";
 
 const Setup = (props) => {
+	//variable decleration from quote api, setup for timer
 	const quote = props.quote;
 	const author = props.author;
 	const [inputTime, setTime] = useState("30");
 
+	//handles when the setup form is submited
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		// hides setup component
 		document.querySelector(".setup-container").classList.add("hide");
+		// shows quote component
 		document.querySelector(".quote-container").classList.remove("hide");
+		// focuses the text input for the quote
 		document.getElementById("text-input").focus();
+		// sets cursor on the first char of quote
 		document.getElementById(0).style.cssText = `
 	        background-color: #cce5ff;
 	    `;
-
+		// starts timer
 		onClickStart();
 	};
 
 	const handleChange = (e) => {
+		// handles the change of value when radio buttons are changed
 		setTime(e.target.value);
 	};
 
@@ -29,6 +36,7 @@ const Setup = (props) => {
 	// The state for our timer
 	const [timer, setTimer] = useState("00:30");
 
+	// function that will return time remaining in countdown
 	const getTimeRemaining = (time) => {
 		const total = Date.parse(time) - Date.parse(new Date());
 		const seconds = Math.floor((total / 1000) % 60);
