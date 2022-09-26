@@ -7,7 +7,8 @@ const Setup = (props) => {
 	const author = props.author;
 	const [inputTime, setTime] = useState("30");
 
-	const handleClick = () => {
+	const handleSubmit = (e) => {
+		e.preventDefault();
 		document.querySelector(".setup-container").classList.add("hide");
 		document.querySelector(".quote-container").classList.remove("hide");
 		document.getElementById("text-input").focus();
@@ -76,24 +77,33 @@ const Setup = (props) => {
 	return (
 		<>
 			<div className="setup-container">
-				<fieldset className="time-select">
-					<legend>Select time:</legend>
+				<form onSubmit={handleSubmit}>
+					<fieldset className="time-select">
+						<legend>Select time:</legend>
 
-					<div className="radio-container">
-						<input type="radio" id="time-30s" name="time" value="30" onChange={handleChange} defaultChecked />
-						<label htmlFor="time-30s">30 sec</label>
-						<br />
-						<input type="radio" id="time-1m" name="time" value="60" onChange={handleChange} />1 min
-						<label htmlFor="time-1m"></label>
-						<br />
-						<input type="radio" id="time-2m" name="time" value="120" onChange={handleChange} />2 min
-						<label htmlFor="time-2m"></label>
-					</div>
-				</fieldset>
+						<div className="radio-container">
+							<input
+								type="radio"
+								id="time-30s"
+								name="time"
+								value="30"
+								onChange={handleChange}
+								defaultChecked
+							/>
+							<label htmlFor="time-30s">30 sec</label>
+							<br />
+							<input type="radio" id="time-1m" name="time" value="60" onChange={handleChange} />1 min
+							<label htmlFor="time-1m"></label>
+							<br />
+							<input type="radio" id="time-2m" name="time" value="120" onChange={handleChange} />2 min
+							<label htmlFor="time-2m"></label>
+						</div>
+					</fieldset>
 
-				<button onClick={handleClick} className="start-button" id="start">
-					Start
-				</button>
+					<button autoFocus type="submit" className="start-button" id="start">
+						Start
+					</button>
+				</form>
 			</div>
 			<TypingInput quote={quote} author={author} loadquote={props.loadquote} timer={timer} time={inputTime} />
 		</>

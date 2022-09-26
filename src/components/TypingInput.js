@@ -32,6 +32,7 @@ const TypingInput = (props) => {
 	const showDashboard = () => {
 		document.querySelector(".dash-container").classList.remove("hide");
 		document.querySelector(".quote-container").classList.add("hide");
+		document.querySelector("#restart").focus();
 	};
 
 	const handleSubmit = (event) => {
@@ -63,9 +64,27 @@ const TypingInput = (props) => {
 			background-color: none;	
 		`;
 		}
-		document.getElementById(input).style.cssText = `
-			background-color: #cce5ff;
-		`;
+		if (input < spannifiedQuote.length) {
+			document.getElementById(input).style.cssText = `
+				background-color: #cce5ff;
+			`;
+		}
+
+		if (input === spannifiedQuote.length) {
+			let errCounter = document.getElementsByClassName("incorrect");
+			setIncorrect(numIncorrect + errCounter.length);
+			props.loadquote();
+			document.getElementById("text-input").value = "";
+
+			let spans = document.getElementsByClassName("quote-spans");
+			for (let span of spans) {
+				span.removeAttribute("style");
+				span.classList.remove("incorrect");
+			}
+			document.getElementById(0).style.cssText = `
+	        background-color: #cce5ff;
+	    `;
+		}
 	};
 
 	// When clicking on the div containing the quote text, it will focus on the hidden input field so you can keep typing
@@ -82,7 +101,7 @@ const TypingInput = (props) => {
             background-color: #f48aa0;
 			`;
 			document.getElementById(currentId).classList.add("incorrect");
-		} else {
+		} else if (userInput.length > 0) {
 			document.getElementById(currentId).removeAttribute("style");
 			document.getElementById(currentId).classList.remove("incorrect");
 		}
@@ -130,7 +149,7 @@ const TypingInput = (props) => {
 				<div className="quote-text">
 					<div className="quote-span-container">{spannifiedQuote}</div>
 					<div className="author">-{author}</div>
-					<form action="" autoComplete="off" className="type-input" onSubmit={handleSubmit}>
+					<form autoComplete="off" className="type-input" id="quote-form" onSubmit={handleSubmit}>
 						<input
 							onChange={handleChange}
 							onKeyUp={handleScore}

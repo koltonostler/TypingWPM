@@ -7,13 +7,21 @@ const Dashboard = (props) => {
 
 	const restart = () => {
 		props.resetDashboard();
+		document.getElementById("start").focus();
+	};
+
+	const handleKeypress = (e) => {
+		if (e.keyCode === 13) {
+			restart();
+		}
+		e.preventDefault();
 	};
 
 	return (
 		<>
 			<div className="dash-container hide">
 				<p>
-					Net WPM: <b>{netWPM}</b>
+					Net WPM: <b>{netWPM.toFixed(2)}</b>
 				</p>
 				<p>
 					Accuracy: <b>{accuracy.toFixed(2)}%</b>
@@ -29,7 +37,7 @@ const Dashboard = (props) => {
 				</p>
 				<br />
 				<br />
-				<button onClick={restart} className="start-button">
+				<button onClick={restart} onKeyDown={handleKeypress} className="start-button" id="restart">
 					Restart
 				</button>
 			</div>
