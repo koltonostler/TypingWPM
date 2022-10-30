@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import Dashboard from "./Dashboard";
+import React, { useState, useEffect } from 'react';
+import Dashboard from './Dashboard';
 
 const TypingInput = (props) => {
 	// variables declared for props from setup, as well as useState variables to handle wpm calculations
@@ -14,7 +14,10 @@ const TypingInput = (props) => {
 	//breaks the quote into single char spans and adds indices for input validation
 	for (let i = 0; i < quote.length; i++) {
 		let currentLetter = (
-			<span key={i} id={i} className="quote-spans">
+			<span
+				key={i}
+				id={i}
+				className='quote-spans'>
 				{quote[i]}
 			</span>
 		);
@@ -23,10 +26,10 @@ const TypingInput = (props) => {
 
 	// checks to see if there is a highscore key in local Storage, if there is return that scores value, if not return 0,
 	const loadHighscore = () => {
-		if (localStorage.getItem("highscore") === null) {
+		if (localStorage.getItem('highscore') === null) {
 			return 0;
 		} else {
-			return JSON.parse(localStorage.getItem("highscore"));
+			return JSON.parse(localStorage.getItem('highscore'));
 		}
 	};
 
@@ -35,7 +38,7 @@ const TypingInput = (props) => {
 
 	useEffect(() => {
 		// when the time hits 0 we will run the following
-		if (props.timer === "00:00") {
+		if (props.timer === '00:00') {
 			countErrors();
 			// get the new WPM for setting the highscore
 			let WPM = keyPressCount / 5 / (time / 60) - numIncorrect / (time / 60);
@@ -51,20 +54,20 @@ const TypingInput = (props) => {
 
 	// show dashboard and hide quote
 	const showDashboard = () => {
-		document.querySelector(".dash-container").classList.remove("hide");
-		document.querySelector(".quote-container").classList.add("hide");
+		document.querySelector('.dash-container').classList.remove('hide');
+		document.querySelector('.quote-container').classList.add('hide');
 		// set focus on restart button so you can use enter to advance
-		document.querySelector("#restart").focus();
+		document.querySelector('#restart').focus();
 	};
 
 	const clearQuotes = () => {
 		// clear the text input
-		document.getElementById("text-input").value = "";
+		document.getElementById('text-input').value = '';
 		// clear the styles and classes of the spans from the new spans from loading the new quote
-		let spans = document.getElementsByClassName("quote-spans");
+		let spans = document.getElementsByClassName('quote-spans');
 		for (let span of spans) {
-			span.removeAttribute("style");
-			span.classList.remove("incorrect");
+			span.removeAttribute('style');
+			span.classList.remove('incorrect');
 		}
 	};
 
@@ -91,19 +94,19 @@ const TypingInput = (props) => {
 
 	const countErrors = () => {
 		// get an array of the chars with incorrect added
-		let errCounter = document.getElementsByClassName("incorrect");
+		let errCounter = document.getElementsByClassName('incorrect');
 		// update the number of incorrect chars
 		setIncorrect(numIncorrect + errCounter.length);
 	};
 
-	const getNewQuote = () => {
+	async function getNewQuote() {
 		// load the new quote
-		props.loadquote();
+		await props.loadquote();
 		// clear the css background elements for the new quote
 		clearQuotes();
 		// reset the cursor
 		resetCursor();
-	};
+	}
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -135,12 +138,12 @@ const TypingInput = (props) => {
 
 	// When clicking on the div containing the quote text, it will focus on the hidden input field so you can keep typing
 	const transferFocus = () => {
-		document.getElementById("text-input").focus();
+		document.getElementById('text-input').focus();
 	};
 	// handles keeping track of wrong inputs
 	const handleChange = () => {
 		// gets the userinput
-		const userInput = document.getElementById("text-input").value;
+		const userInput = document.getElementById('text-input').value;
 		// currentId will match the index of that spans created during spannifyquote
 		let currentId = userInput.length - 1;
 		handleCursor(userInput.length);
@@ -149,27 +152,27 @@ const TypingInput = (props) => {
 			document.getElementById(currentId).style.cssText = `
             background-color: #f48aa0;
 			`;
-			document.getElementById(currentId).classList.add("incorrect");
+			document.getElementById(currentId).classList.add('incorrect');
 			// handles when using backspace, only runs when userinput is > 0 as not to reference null Idex
 		} else if (userInput.length > 0) {
-			document.getElementById(currentId).removeAttribute("style");
-			document.getElementById(currentId).classList.remove("incorrect");
+			document.getElementById(currentId).removeAttribute('style');
+			document.getElementById(currentId).classList.remove('incorrect');
 		}
 	};
 
 	const handleScore = (e) => {
-		let userInput = document.getElementById("text-input").value;
+		let userInput = document.getElementById('text-input').value;
 		let currentId = userInput.length - 1;
 		// registers a key press except for when pressing backspace, shift and enter
-		if (e.key !== "Backspace" && e.key !== "Shift" && e.key !== "Enter") {
+		if (e.key !== 'Backspace' && e.key !== 'Shift' && e.key !== 'Enter') {
 			setKeyCount(keyPressCount + 1);
 		}
 		// registers an incorrect key press when input and quote don't match, and it isn't a backspace
-		if (userInput[currentId] !== quote[currentId] && e.key !== "Backspace") {
+		if (userInput[currentId] !== quote[currentId] && e.key !== 'Backspace') {
 			setWrongKey(wrongKeyPressCount + 1);
 		}
 		// take away keypress when you hit backspace, else you could just delete the whole text and get credit for correct keys for any backspace.
-		if (e.key === "Backspace") {
+		if (e.key === 'Backspace') {
 			setKeyCount(keyPressCount - 1);
 		}
 	};
@@ -181,31 +184,37 @@ const TypingInput = (props) => {
 		setKeyCount(0);
 		setWrongKey(0);
 		// hide the dashboard component, show the setup component
-		document.querySelector(".dash-container").classList.add("hide");
-		document.querySelector(".setup-container").classList.remove("hide");
+		document.querySelector('.dash-container').classList.add('hide');
+		document.querySelector('.setup-container').classList.remove('hide');
 		// clear text input, reset curor and load quote
 		getNewQuote();
 	};
 
 	return (
 		<>
-			<div className="quote-container hide" onClick={transferFocus}>
-				<h2 className="timer">{props.timer}</h2>
-				<div className="quote-text">
-					<div className="quote-span-container">{spannifiedQuote}</div>
-					<div className="author">-{author}</div>
-					<form autoComplete="off" className="type-input" id="quote-form" onSubmit={handleSubmit}>
+			<div
+				className='quote-container hide'
+				onClick={transferFocus}>
+				<h2 className='timer'>{props.timer}</h2>
+				<div className='quote-text'>
+					<div className='quote-span-container'>{spannifiedQuote}</div>
+					<div className='author'>-{author}</div>
+					<form
+						autoComplete='off'
+						className='type-input'
+						id='quote-form'
+						onSubmit={handleSubmit}>
 						<input
 							onChange={handleChange}
 							onKeyUp={handleScore}
-							type="text"
-							name="text-input"
-							id="text-input"
+							type='text'
+							name='text-input'
+							id='text-input'
 							autoFocus
 						/>
 					</form>
 				</div>
-				<span className="enter-prompt">Press ENTER to go to next quote</span>
+				<span className='enter-prompt'>Press ENTER to go to next quote</span>
 			</div>
 
 			<Dashboard
