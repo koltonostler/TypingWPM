@@ -1,29 +1,27 @@
-import { useState, useEffect } from "react";
-import Setup from "./components/Setup";
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import Setup from './components/Setup';
 
 function App() {
 	//####   Setup Quote API    #####
-	const quoteAPI = "https://api.quotable.io/random?minLength=75";
+	const quoteAPI = 'https://api.quotable.io/random?minLength=75';
 	const [error, setError] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [quote, setQuote] = useState([]);
 
-	// loads and parses quote from API into json format
+	// loads and parses quote from API using axios
 	const loadQuote = () => {
-		fetch(quoteAPI)
-			.then((res) => res.json())
-			.then(
-				(data) => {
-					// data.author = data.author;
-					// data.content = data.content;
-					setQuote(data);
-					setIsLoaded(true);
-				},
-				(error) => {
-					setIsLoaded(true);
-					setError(error);
-				}
-			);
+		axios
+			.get(quoteAPI)
+			.then((res) => {
+				const data = res.data;
+				setQuote(data);
+				setIsLoaded(true);
+			})
+			.catch((error) => {
+				setIsLoaded(true);
+				setError(error);
+			});
 	};
 
 	useEffect(() => {
@@ -36,9 +34,13 @@ function App() {
 		return <div>Loading...</div>;
 	} else {
 		return (
-			<div className="App">
-				<h1 className="title">Typing Test</h1>
-				<Setup quote={quote.content} author={quote.author} loadquote={loadQuote} />
+			<div className='App'>
+				<h1 className='title'>Typing Test</h1>
+				<Setup
+					quote={quote.content}
+					author={quote.author}
+					loadquote={loadQuote}
+				/>
 			</div>
 		);
 	}
